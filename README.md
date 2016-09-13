@@ -15,7 +15,7 @@ TBD
 
 ## Setup
 
-    npm i -g react-native
+    npm i -g react-native-cli
     npm install
     react-native run-(android|ios)
 
