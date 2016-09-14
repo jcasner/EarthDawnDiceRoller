@@ -1,11 +1,19 @@
 import expect from 'expect';
+import _ from 'lodash';
+
 import {
+  explodingDie,
   getSumOfAllRolls,
   getSumOfRolls,
-  rollDie
+  rollDie,
+  rollStepDice
 } from '../app/utils/diceUtils';
 
-describe('Roll a single die', () => {
+describe('rollDie', () => {
+  it('returns 1 for a `zero-sided` die', () => {
+    expect(rollDie(0)).toEqual(1);
+  });
+
   it('rolls a one-sided die', () => {
     expect(rollDie(1)).toEqual(1);
   });
@@ -18,7 +26,7 @@ describe('Roll a single die', () => {
   });
 });
 
-describe('Get the sume of several dice rolls', () => {
+describe('getSumOfRolls', () => {
   it('Sums an array of dice rolls', () => {
     expect(getSumOfRolls([1,2])).toEqual(3);
     expect(getSumOfRolls([1,2,3,4])).toEqual(10);
@@ -37,7 +45,7 @@ describe('Get the sume of several dice rolls', () => {
   });
 });
 
-describe('Get a total from the sums of several dice rolls', () => {
+describe('getSumOfAllRolls', () => {
   it('Sums an array of dice roll results', () => {
     const results = [
       {
@@ -73,5 +81,72 @@ describe('Get a total from the sums of several dice rolls', () => {
 
   it('Returns 0 when passed null', () => {
     expect(getSumOfAllRolls(null)).toEqual(0);
+  });
+});
+
+describe('explodingDie', () => {
+  it('Rolls more dice when getting the max value of the current die', () => {
+    expect(explodingDie(1)).toEqual([1,1,1,1,1]);
+  });
+
+  it("Doesn't roll more dice when getting the max value of the current die", () => {
+    expect(explodingDie(0)).toEqual([1]);
+  });
+});
+
+describe('rollStepDice', () => {
+  it('rolls a d0 for unknown steps', () => {
+    const resultStep0 = rollStepDice(0);
+    const resultStep21 = rollStepDice(21);
+    expect(resultStep0.dice.length).toEqual(1);
+    expect(resultStep0.dice[0].total).toBeA('number');
+    expect(resultStep0.dice[0].name).toEqual('d0');
+    expect(_.sum(resultStep0.dice[0].rolls)).toEqual(resultStep0.dice[0].total);
+    expect(resultStep21.dice.length).toEqual(1);
+    expect(resultStep21.dice[0].total).toBeA('number');
+    expect(resultStep21.dice[0].name).toEqual('d0');
+    expect(_.sum(resultStep21.dice[0].rolls)).toEqual(resultStep21.dice[0].total);
+  });
+
+
+  it('rolls a d4-2 for step 1', () => {
+    const resultStep1 = rollStepDice(1);
+    expect(resultStep1.dice.length).toEqual(1);
+    expect(resultStep1.dice[0].total).toBeA('number');
+    expect(resultStep1.dice[0].name).toEqual('d4 - 2');
+    expect(_.sum(resultStep1.dice[0].rolls)).toEqual(resultStep1.dice[0].total);
+  });
+
+  it('rolls a d4-1 for step 2', () => {
+    const resultStep2 = rollStepDice(2);
+    expect(resultStep2.dice.length).toEqual(1);
+    expect(resultStep2.dice[0].total).toBeA('number');
+    expect(resultStep2.dice[0].name).toEqual('d4 - 1');
+    expect(_.sum(resultStep2.dice[0].rolls)).toEqual(resultStep2.dice[0].total);
+  });
+
+  it('rolls 2d6 for step 8', () => {
+    const resultStep8 = rollStepDice(8);
+    expect(resultStep8.dice.length).toEqual(2);
+    expect(resultStep8.dice[0].total).toBeA('number');
+    expect(resultStep8.dice[0].name).toEqual('d6');
+    expect(_.sum(resultStep8.dice[0].rolls)).toEqual(resultStep8.dice[0].total);
+    expect(resultStep8.dice[1].total).toBeA('number');
+    expect(resultStep8.dice[1].name).toEqual('d6');
+    expect(_.sum(resultStep8.dice[1].rolls)).toEqual(resultStep8.dice[1].total);
+  });
+
+  it('rolls a d20, d8, and d6 for step 8', () => {
+    const resultStep20 = rollStepDice(20);
+    expect(resultStep20.dice.length).toEqual(3);
+    expect(resultStep20.dice[0].total).toBeA('number');
+    expect(resultStep20.dice[0].name).toEqual('d20');
+    expect(_.sum(resultStep20.dice[0].rolls)).toEqual(resultStep20.dice[0].total);
+    expect(resultStep20.dice[1].total).toBeA('number');
+    expect(resultStep20.dice[1].name).toEqual('d8');
+    expect(_.sum(resultStep20.dice[1].rolls)).toEqual(resultStep20.dice[1].total);
+    expect(resultStep20.dice[2].total).toBeA('number');
+    expect(resultStep20.dice[2].name).toEqual('d6');
+    expect(_.sum(resultStep20.dice[2].rolls)).toEqual(resultStep20.dice[2].total);
   });
 });

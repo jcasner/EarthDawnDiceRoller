@@ -46,10 +46,11 @@ export function explodingDie(numSides) {
 
 export function rollStepDice(step) {
   const stepValue = Number(step);
+  let dieSides, rolls;
   switch(stepValue) {
     case 1: {
       dieSides = convertStepToDice(stepValue);
-      rolls = rollDie(dieSides[0]) -2;
+      rolls = [rollDie(dieSides[0]) -2];
       return {
           dice: [
             {
@@ -63,7 +64,7 @@ export function rollStepDice(step) {
     }
     case 2: {
       dieSides = convertStepToDice(stepValue);
-      rolls = rollDie(dieSides[0]) -1;
+      rolls = [rollDie(dieSides[0]) -1];
       return {
           dice: [
             {
