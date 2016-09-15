@@ -26,13 +26,8 @@ export default handleActions({
   })
 }, initialState);
 
-export const quickButtonOneSelector = state => {
-  console.log('buttonOneSelector', state)
-  return state[QUICK_BUTTON_ONE];
-}
+export const quickButtonOneSelector = state => state[QUICK_BUTTON_ONE];
 
-export const quickButtonTwoSelector = state =>
-  state[QUICK_BUTTON_TWO];
+export const quickButtonTwoSelector = state => state[QUICK_BUTTON_TWO];
 
-export const quickButtonThreeSelector = state =>
-  state[QUICK_BUTTON_THREE];
+export const quickButtonThreeSelector = state => state[QUICK_BUTTON_THREE];

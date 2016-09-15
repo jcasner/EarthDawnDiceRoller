@@ -77,6 +77,10 @@ export const textStyles = StyleSheet.create({
     fontSize: 20,
     paddingRight: 10,
   },
+  settingsSmall: {
+    color: 'white',
+    fontSize: 10,
+  },
   singleResult: {
     color: '#F5FCFC',
     height: 60,

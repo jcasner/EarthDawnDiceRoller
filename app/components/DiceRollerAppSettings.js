@@ -13,7 +13,13 @@ import {
   QUICK_BUTTON_TWO,
   QUICK_BUTTON_THREE
 } from '../constants/QuickButtonNames';
-import { loadQuickButtons, saveQuickButton } from '../actions';
+import {
+  loadKarmaDie,
+  loadQuickButtons,
+  saveKarmaDie,
+  saveQuickButton
+} from '../actions';
+import { karmaDieSelector } from '../reducers/karmaDiceReducer';
 import {
   quickButtonOneSelector,
   quickButtonTwoSelector,
@@ -26,13 +32,17 @@ class DiceRollerAppSettings extends Component {
     super(props);
   }
 
-  handleChangeValue = (id, value) => {
+  handleChangeKarmaDieValue = value => {
+    this.props.saveKarmaDie(value);
+  };
+
+  handleChangeQuickDieValue = (id, value) => {
     this.props.saveQuickButton(id, value);
-    this.props.loadQuickButtons(id);
   };
 
   render() {
     const {
+      karmaDie,
       quickButtonOne,
       quickButtonTwo,
       quickButtonThree
@@ -49,7 +59,7 @@ class DiceRollerAppSettings extends Component {
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeValue(QUICK_BUTTON_ONE, text)}
+              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_ONE, text)}
               style={inputStyles.inputBox}
               value={quickButtonOne}
             />
@@ -62,7 +72,7 @@ class DiceRollerAppSettings extends Component {
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeValue(QUICK_BUTTON_TWO, text)}
+              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_TWO, text)}
               style={inputStyles.inputBox}
               value={quickButtonTwo}
             />
@@ -72,12 +82,27 @@ class DiceRollerAppSettings extends Component {
           <Text style={textStyles.settings}>
             Quick Button 3:
           </Text>
+          <Text style={textStyles.settingsSmall}>Step</Text>
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeValue(QUICK_BUTTON_THREE, text)}
+              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_THREE, text)}
               style={inputStyles.inputBox}
               value={quickButtonThree}
+            />
+          </View>
+        </View>
+        <View style={containerStyles.rowContainer}>
+          <Text style={textStyles.settings}>
+            Karma Die Sides:
+          </Text>
+          <Text style={textStyles.settingsSmall}>d</Text>
+          <View style={containerStyles.inputContainer}>
+            <TextInput
+              keyboardType = 'numeric'
+              onChangeText={(text) => this.handleChangeKarmaDieValue(text)}
+              style={inputStyles.inputBox}
+              value={karmaDie}
             />
           </View>
         </View>
@@ -89,12 +114,15 @@ class DiceRollerAppSettings extends Component {
 const enhance = compose(
   connect(
     createStructuredSelector({
+      karmaDie: karmaDieSelector,
       quickButtonOne: quickButtonOneSelector,
       quickButtonTwo: quickButtonTwoSelector,
       quickButtonThree: quickButtonThreeSelector
     }),
     {
+      loadKarmaDie,
       loadQuickButtons,
+      saveKarmaDie,
       saveQuickButton
     }
   )

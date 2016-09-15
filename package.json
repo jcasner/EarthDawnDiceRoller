@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "android": "react-native run-ios",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "mocha --compilers js:babel-core/register"
   },
@@ -10,6 +11,7 @@
     "lodash": "^4.15.0",
     "react": "15.2.1",
     "react-native": "0.30.0",
+    "react-native-checkbox": "^1.0.15",
     "react-native-simple-store": "^1.1.0",
     "react-redux": "^4.4.5",
     "recompose": "^0.20.2",
@@ -27,8 +29,7 @@
   },
   "babel": {
     "presets": [
-      "es2015",
-      "react"
+      "react-native"
     ]
   }
 }

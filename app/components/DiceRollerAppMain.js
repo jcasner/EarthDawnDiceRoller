@@ -6,6 +6,7 @@ import {
   View
 } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
+import CheckBox from 'react-native-checkbox';
 
 import Button from './Button';
 import DiceRollerAppSettings from './DiceRollerAppSettings';
@@ -20,16 +21,24 @@ class DiceRollerAppMain extends Component {
     super(props);
     const { navigator } = this.props;
     this.state = {
-      diceRolls: { }
+      diceRolls: { },
+      includeKarmaDie: false
     };
     this.handleRollClick = this.handleRollClick.bind(this);
+    this.handleKarmaDieClick = this.handleKarmaDieClick.bind(this);
   }
 
   handleRollClick(step) {
     this.setState({
-    	diceRolls: rollStepDice(step)
+    	diceRolls: rollStepDice(step, this.state.includeKarmaDie)
     });
     dismissKeyboard();
+  }
+
+  handleKarmaDieClick(checked) {
+    this.setState({
+      includeKarmaDie: checked
+    });
   }
 
   navigateToSettings() {
@@ -40,6 +49,7 @@ class DiceRollerAppMain extends Component {
 
   render() {
     let diceRolls = this.state.diceRolls;
+    const karmaDie = this.state.includeKarmaDie;
     const { title } = this.props;
     return (
       <View>
@@ -50,6 +60,7 @@ class DiceRollerAppMain extends Component {
           onActionSelected={this.navigateToSettings.bind(this)} />
         <View style={containerStyles.topContainer}>
           <QuickDiceRollView handlePress={this.handleRollClick} />
+          <CheckBox label="Karma Die?" checked={karmaDie} onChange={this.handleKarmaDieClick} />
           <Result diceRolls={ diceRolls } />
           <IndividualDiceRollView handlePress={this.handleRollClick} />
         </View>

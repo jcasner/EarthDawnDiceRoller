@@ -2,6 +2,7 @@ import expect from 'expect';
 import _ from 'lodash';
 
 import {
+  addKarmaDie,
   explodingDie,
   getSumOfAllRolls,
   getSumOfRolls,
@@ -91,6 +92,43 @@ describe('explodingDie', () => {
 
   it("Doesn't roll more dice when getting the max value of the current die", () => {
     expect(explodingDie(0)).toEqual([1]);
+  });
+});
+
+describe('addKarmaDie', () => {
+  it('adds a d6 for a karma die', () => {
+    const dieRoll = {
+      dice: [
+        {
+          name: 'd8',
+          rolls: [4],
+          total: 4
+        }
+      ],
+      total: 4
+    };
+    const dieRollWithKarma = addKarmaDie(dieRoll, true);
+    expect(dieRollWithKarma.dice.length).toEqual(2);
+    expect(dieRollWithKarma.dice[1].total).toBeA('number');
+    expect(dieRollWithKarma.dice[1].name).toEqual('karma(d6)');
+    expect(_.sum(dieRollWithKarma.dice[1].rolls)).toEqual(dieRollWithKarma.dice[1].total);
+    expect(4 + dieRollWithKarma.dice[1].total).toEqual(dieRollWithKarma.total);
+  });
+
+  it('adds nothing when includeKarmaDie is false', () => {
+    const dieRoll = {
+      dice: [
+        {
+          name: 'd8',
+          rolls: [4],
+          total: 4
+        }
+      ],
+      total: 4
+    };
+    const dieRollWithKarma = addKarmaDie(dieRoll, false);
+    expect(dieRollWithKarma.dice.length).toEqual(1);
+    expect(dieRollWithKarma.dice[0].total).toEqual(4);
   });
 });
 
