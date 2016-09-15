@@ -17,7 +17,7 @@ TBD
 
     npm i -g react-native-cli
     npm install
-    react-native run-(android|ios)
+    npm run (android|ios)
 
 # Contributions & Bugs
 
