@@ -46,15 +46,16 @@ export function explodingDie(numSides) {
 
 export function addKarmaDie(dieRollObject, includeKarmaDie, karmaDieSides) {
   if (includeKarmaDie) {
-    const karmaDieRoll = [rollDie(karmaDieSides)];
+    const karmaDieRoll = explodingDie(karmaDieSides);
+    const total = getSumOfRolls(karmaDieRoll);
     dieRollObject.dice.push(
       {
         name: `karma(d${karmaDieSides})`,
         rolls: karmaDieRoll,
-        total: karmaDieRoll[0]
+        total
       }
     )
-    dieRollObject.total += karmaDieRoll[0];
+    dieRollObject.total += total;
   }
   return dieRollObject;
 }

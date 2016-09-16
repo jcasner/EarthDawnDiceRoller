@@ -115,6 +115,25 @@ describe('addKarmaDie', () => {
     expect(4 + dieRollWithKarma.dice[1].total).toEqual(dieRollWithKarma.total);
   });
 
+  it('adds an exploding dice roll for a karma die', () => {
+    const dieRoll = {
+      dice: [
+        {
+          name: 'd8',
+          rolls: [4],
+          total: 4
+        }
+      ],
+      total: 4
+    };
+    const dieRollWithKarma = addKarmaDie(dieRoll, true, 1);
+    expect(dieRollWithKarma.dice.length).toEqual(2);
+    expect(dieRollWithKarma.dice[1].total).toBeA('number');
+    expect(dieRollWithKarma.dice[1].name).toEqual('karma(d1)');
+    expect(_.sum(dieRollWithKarma.dice[1].rolls)).toEqual(dieRollWithKarma.dice[1].total);
+    expect(4 + dieRollWithKarma.dice[1].total).toEqual(dieRollWithKarma.total);
+  });
+
   it('adds nothing when includeKarmaDie is false', () => {
     const dieRoll = {
       dice: [
