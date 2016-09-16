@@ -44,12 +44,12 @@ export function explodingDie(numSides) {
   return allRolls;
 }
 
-export function addKarmaDie(dieRollObject, includeKarmaDie) {
+export function addKarmaDie(dieRollObject, includeKarmaDie, karmaDieSides) {
   if (includeKarmaDie) {
-    const karmaDieRoll = [rollDie(6)];
+    const karmaDieRoll = [rollDie(karmaDieSides)];
     dieRollObject.dice.push(
       {
-        name: 'karma(d6)',
+        name: `karma(d${karmaDieSides})`,
         rolls: karmaDieRoll,
         total: karmaDieRoll[0]
       }
@@ -59,7 +59,7 @@ export function addKarmaDie(dieRollObject, includeKarmaDie) {
   return dieRollObject;
 }
 
-export function rollStepDice(step, includeKarmaDie) {
+export function rollStepDice(step, includeKarmaDie, karmaDieSides) {
   const stepValue = Number(step);
   let dieSides, rolls;
   switch(stepValue) {
@@ -75,7 +75,7 @@ export function rollStepDice(step, includeKarmaDie) {
             },
           ],
           total: getSumOfRolls(rolls)
-        }, includeKarmaDie);
+        }, includeKarmaDie, karmaDieSides);
     }
     case 2: {
       dieSides = convertStepToDice(stepValue);
@@ -89,7 +89,7 @@ export function rollStepDice(step, includeKarmaDie) {
             },
           ],
           total: getSumOfRolls(rolls)
-        }, includeKarmaDie);
+        }, includeKarmaDie, karmaDieSides);
     }
     default: {
       let results = [];
@@ -105,7 +105,7 @@ export function rollStepDice(step, includeKarmaDie) {
       return addKarmaDie({
           dice: results,
           total: getSumOfAllRolls(results)
-        }, includeKarmaDie);
+        }, includeKarmaDie, karmaDieSides);
     }
   }
 }

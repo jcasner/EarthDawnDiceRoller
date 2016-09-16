@@ -7,6 +7,9 @@ import {
 } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import CheckBox from 'react-native-checkbox';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import compose from 'recompose/compose';
 
 import Button from './Button';
 import DiceRollerAppSettings from './DiceRollerAppSettings';
@@ -15,6 +18,7 @@ import QuickDiceRollView from './QuickDiceRollView';
 import Result from './Result';
 import { containerStyles, textStyles, toolbarStyles } from './styles';
 import { rollStepDice } from '../utils/diceUtils';
+import { karmaDieSelector } from '../reducers/karmaDiceReducer';
 
 class DiceRollerAppMain extends Component {
   constructor(props) {
@@ -29,8 +33,10 @@ class DiceRollerAppMain extends Component {
   }
 
   handleRollClick(step) {
+    const { includeKarmaDie } = this.state;
+    const { karmaDieSides } = this.props;
     this.setState({
-    	diceRolls: rollStepDice(step, this.state.includeKarmaDie)
+    	diceRolls: rollStepDice(step, includeKarmaDie, karmaDieSides)
     });
     dismissKeyboard();
   }
@@ -49,7 +55,7 @@ class DiceRollerAppMain extends Component {
 
   render() {
     let diceRolls = this.state.diceRolls;
-    const karmaDie = this.state.includeKarmaDie;
+    const { includeKarmaDie } = this.state;
     const { title } = this.props;
     return (
       <View>
@@ -60,7 +66,7 @@ class DiceRollerAppMain extends Component {
           onActionSelected={this.navigateToSettings.bind(this)} />
         <View style={containerStyles.topContainer}>
           <QuickDiceRollView handlePress={this.handleRollClick} />
-          <CheckBox label="Karma Die?" checked={karmaDie} onChange={this.handleKarmaDieClick} />
+          <CheckBox label="Karma Die?" checked={includeKarmaDie} onChange={this.handleKarmaDieClick} />
           <Result diceRolls={ diceRolls } />
           <IndividualDiceRollView handlePress={this.handleRollClick} />
         </View>
@@ -69,4 +75,12 @@ class DiceRollerAppMain extends Component {
   }
 }
 
-export default DiceRollerAppMain;
+const enhance = compose(
+  connect(
+    createStructuredSelector({
+      karmaDieSides: karmaDieSelector
+    })
+  )
+);
+
+export default enhance(DiceRollerAppMain);

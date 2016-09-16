@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 import { autoRehydrate } from 'redux-persist';
 
-import quickDice from './reducers/quickDiceReducer';
+import reducers from './reducers';
 
-export default () => createStore(quickDice, undefined, autoRehydrate());
+export default () => createStore(reducers, undefined, autoRehydrate());
