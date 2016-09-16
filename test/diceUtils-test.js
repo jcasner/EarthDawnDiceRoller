@@ -96,7 +96,7 @@ describe('explodingDie', () => {
 });
 
 describe('addKarmaDie', () => {
-  it('adds a d6 for a karma die', () => {
+  it('adds a dice roll for a karma die', () => {
     const dieRoll = {
       dice: [
         {
@@ -107,7 +107,7 @@ describe('addKarmaDie', () => {
       ],
       total: 4
     };
-    const dieRollWithKarma = addKarmaDie(dieRoll, true);
+    const dieRollWithKarma = addKarmaDie(dieRoll, true, 6);
     expect(dieRollWithKarma.dice.length).toEqual(2);
     expect(dieRollWithKarma.dice[1].total).toBeA('number');
     expect(dieRollWithKarma.dice[1].name).toEqual('karma(d6)');

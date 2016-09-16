@@ -6,7 +6,7 @@ import {
 } from '../actions';
 
 export const initialState = {
-  karmaDie: 6
+  karmaDieSides: '6'
 }
 
 export default handleActions({
@@ -15,8 +15,8 @@ export default handleActions({
   }),
   [SAVE_KARMA_DIE]: (state, { payload }) => ({
     ...state,
-    karmaDie: payload
+    karmaDieSides: payload
   })
 }, initialState);
 
-export const karmaDieSelector = state => state.karmaDie;
+export const karmaDieSelector = state => state.karmaDice.karmaDieSides;

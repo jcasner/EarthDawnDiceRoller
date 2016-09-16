@@ -14,8 +14,6 @@ import {
   QUICK_BUTTON_THREE
 } from '../constants/QuickButtonNames';
 import {
-  loadKarmaDie,
-  loadQuickButtons,
   saveKarmaDie,
   saveQuickButton
 } from '../actions';
@@ -42,7 +40,7 @@ class DiceRollerAppSettings extends Component {
 
   render() {
     const {
-      karmaDie,
+      karmaDieSides,
       quickButtonOne,
       quickButtonTwo,
       quickButtonThree
@@ -56,6 +54,7 @@ class DiceRollerAppSettings extends Component {
           <Text style={textStyles.settings}>
             Quick Button 1:
           </Text>
+          <Text style={textStyles.settingsSmall}>Step</Text>
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
@@ -69,6 +68,7 @@ class DiceRollerAppSettings extends Component {
           <Text style={textStyles.settings}>
             Quick Button 2:
           </Text>
+          <Text style={textStyles.settingsSmall}>Step</Text>
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
@@ -96,13 +96,13 @@ class DiceRollerAppSettings extends Component {
           <Text style={textStyles.settings}>
             Karma Die Sides:
           </Text>
-          <Text style={textStyles.settingsSmall}>d</Text>
+          <Text style={textStyles.settingsSmall}>d </Text>
           <View style={containerStyles.inputContainer}>
             <TextInput
               keyboardType = 'numeric'
               onChangeText={(text) => this.handleChangeKarmaDieValue(text)}
               style={inputStyles.inputBox}
-              value={karmaDie}
+              value={karmaDieSides}
             />
           </View>
         </View>
@@ -114,14 +114,12 @@ class DiceRollerAppSettings extends Component {
 const enhance = compose(
   connect(
     createStructuredSelector({
-      karmaDie: karmaDieSelector,
+      karmaDieSides: karmaDieSelector,
       quickButtonOne: quickButtonOneSelector,
       quickButtonTwo: quickButtonTwoSelector,
       quickButtonThree: quickButtonThreeSelector
     }),
     {
-      loadKarmaDie,
-      loadQuickButtons,
       saveKarmaDie,
       saveQuickButton
     }
