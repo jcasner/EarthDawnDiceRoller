@@ -2,8 +2,8 @@ import expect from 'expect';
 import _ from 'lodash';
 
 import {
-  addKarmaDie,
   explodingDie,
+  getDiceRollResult,
   getSumOfAllRolls,
   getSumOfRolls,
   rollDie,
@@ -95,62 +95,6 @@ describe('explodingDie', () => {
   });
 });
 
-describe('addKarmaDie', () => {
-  it('adds a dice roll for a karma die', () => {
-    const dieRoll = {
-      dice: [
-        {
-          name: 'd8',
-          rolls: [4],
-          total: 4
-        }
-      ],
-      total: 4
-    };
-    const dieRollWithKarma = addKarmaDie(dieRoll, true, 6);
-    expect(dieRollWithKarma.dice.length).toEqual(2);
-    expect(dieRollWithKarma.dice[1].total).toBeA('number');
-    expect(dieRollWithKarma.dice[1].name).toEqual('karma(d6)');
-    expect(_.sum(dieRollWithKarma.dice[1].rolls)).toEqual(dieRollWithKarma.dice[1].total);
-    expect(4 + dieRollWithKarma.dice[1].total).toEqual(dieRollWithKarma.total);
-  });
-
-  it('adds an exploding dice roll for a karma die', () => {
-    const dieRoll = {
-      dice: [
-        {
-          name: 'd8',
-          rolls: [4],
-          total: 4
-        }
-      ],
-      total: 4
-    };
-    const dieRollWithKarma = addKarmaDie(dieRoll, true, 1);
-    expect(dieRollWithKarma.dice.length).toEqual(2);
-    expect(dieRollWithKarma.dice[1].total).toBeA('number');
-    expect(dieRollWithKarma.dice[1].name).toEqual('karma(d1)');
-    expect(_.sum(dieRollWithKarma.dice[1].rolls)).toEqual(dieRollWithKarma.dice[1].total);
-    expect(4 + dieRollWithKarma.dice[1].total).toEqual(dieRollWithKarma.total);
-  });
-
-  it('adds nothing when includeKarmaDie is false', () => {
-    const dieRoll = {
-      dice: [
-        {
-          name: 'd8',
-          rolls: [4],
-          total: 4
-        }
-      ],
-      total: 4
-    };
-    const dieRollWithKarma = addKarmaDie(dieRoll, false);
-    expect(dieRollWithKarma.dice.length).toEqual(1);
-    expect(dieRollWithKarma.dice[0].total).toEqual(4);
-  });
-});
-
 describe('rollStepDice', () => {
   it('rolls a d0 for unknown steps', () => {
     const resultStep0 = rollStepDice(0);
@@ -170,7 +114,7 @@ describe('rollStepDice', () => {
     const resultStep1 = rollStepDice(1);
     expect(resultStep1.dice.length).toEqual(1);
     expect(resultStep1.dice[0].total).toBeA('number');
-    expect(resultStep1.dice[0].name).toEqual('d4 - 2');
+    expect(resultStep1.dice[0].name).toEqual('d4-2');
     expect(_.sum(resultStep1.dice[0].rolls)).toEqual(resultStep1.dice[0].total);
   });
 
@@ -178,7 +122,7 @@ describe('rollStepDice', () => {
     const resultStep2 = rollStepDice(2);
     expect(resultStep2.dice.length).toEqual(1);
     expect(resultStep2.dice[0].total).toBeA('number');
-    expect(resultStep2.dice[0].name).toEqual('d4 - 1');
+    expect(resultStep2.dice[0].name).toEqual('d4-1');
     expect(_.sum(resultStep2.dice[0].rolls)).toEqual(resultStep2.dice[0].total);
   });
 
@@ -186,11 +130,31 @@ describe('rollStepDice', () => {
     const resultStep8 = rollStepDice(8);
     expect(resultStep8.dice.length).toEqual(2);
     expect(resultStep8.dice[0].total).toBeA('number');
+    expect(resultStep8.dice[0].total).toBeGreaterThan(0);
     expect(resultStep8.dice[0].name).toEqual('d6');
     expect(_.sum(resultStep8.dice[0].rolls)).toEqual(resultStep8.dice[0].total);
     expect(resultStep8.dice[1].total).toBeA('number');
+    expect(resultStep8.dice[1].total).toBeGreaterThan(0);
     expect(resultStep8.dice[1].name).toEqual('d6');
     expect(_.sum(resultStep8.dice[1].rolls)).toEqual(resultStep8.dice[1].total);
+  });
+
+  it('rolls 2d6 for step 8 with karma', () => {
+    const resultStep8 = rollStepDice(8, true, 1);
+    expect(resultStep8.dice.length).toEqual(3);
+    expect(resultStep8.dice[0].total).toBeA('number');
+    expect(resultStep8.dice[0].total).toBeGreaterThan(0);
+    expect(resultStep8.dice[0].name).toEqual('d6');
+    expect(_.sum(resultStep8.dice[0].rolls)).toEqual(resultStep8.dice[0].total);
+    expect(resultStep8.dice[1].total).toBeA('number');
+    expect(resultStep8.dice[1].total).toBeGreaterThan(0);
+    expect(resultStep8.dice[1].name).toEqual('d6');
+    expect(_.sum(resultStep8.dice[1].rolls)).toEqual(resultStep8.dice[1].total);
+    expect(resultStep8.dice[2].total).toBeA('number');
+    expect(resultStep8.dice[2].total).toEqual(5);
+    expect(resultStep8.dice[2].name).toEqual('karma (d1)');
+    expect(resultStep8.dice[2].rolls.length).toEqual(5);
+    expect(_.sum(resultStep8.dice[2].rolls)).toEqual(resultStep8.dice[2].total);
   });
 
   it('rolls a d20, d8, and d6 for step 8', () => {
@@ -207,3 +171,40 @@ describe('rollStepDice', () => {
     expect(_.sum(resultStep20.dice[2].rolls)).toEqual(resultStep20.dice[2].total);
   });
 });
+
+describe('getDiceRollResult', () => {
+  it('rolls an exploding die with no modifier', () => {
+    const result = getDiceRollResult(1, 'd1');
+    expect(result.name).toEqual('d1');
+    expect(result.rolls).toEqual([1,1,1,1,1]);
+    expect(result.total).toEqual(5);
+  });
+
+  it('rolls an exploding karma die', () => {
+    const result = getDiceRollResult('1', 'karma (d1)');
+    expect(result.name).toEqual('karma (d1)');
+    expect(result.rolls).toEqual([1,1,1,1,1]);
+    expect(result.total).toEqual(5);
+  });
+
+  it('rolls an exploding die with a 0 modifier', () => {
+    const result = getDiceRollResult(1, 'd1', 0);
+    expect(result.name).toEqual('d1');
+    expect(result.rolls).toEqual([1,1,1,1,1]);
+    expect(result.total).toEqual(5);
+  });
+
+  it('rolls an exploding die with a -1 modifier', () => {
+    const result = getDiceRollResult(1, 'd1', -1);
+    expect(result.name).toEqual('d1-1');
+    expect(result.rolls).toEqual([0,0,0,0,0]);
+    expect(result.total).toEqual(0);
+  });
+
+  it('rolls an exploding die with a 1 modifier', () => {
+    const result = getDiceRollResult(1, 'd1', 1);
+    expect(result.name).toEqual('d1+1');
+    expect(result.rolls).toEqual([2,2,2,2,2]);
+    expect(result.total).toEqual(10);
+  });
+})

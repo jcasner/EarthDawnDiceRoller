@@ -27,86 +27,72 @@ export function getSumOfAllRolls(manyRolls) {
   return 0;
 }
 
-export function explodingDie(numSides) {
+export function explodingDie(numSides, modifier = 0) {
   let currentRoll = rollDie(numSides);
   const allRolls = [];
 
   while (currentRoll === numSides) {
-    allRolls.push(currentRoll);
+    allRolls.push(currentRoll + modifier);
     currentRoll = rollDie(numSides);
-    if (allRolls.length >= 4) {
+    if (allRolls.length >= 4) { // don't roll indefinitely in case there's a bug
       break;
     }
   }
 
-  allRolls.push(currentRoll);
+  allRolls.push(currentRoll + modifier);
 
   return allRolls;
 }
 
-export function addKarmaDie(dieRollObject, includeKarmaDie, karmaDieSides) {
-  if (includeKarmaDie) {
-    const karmaDieRoll = explodingDie(karmaDieSides);
-    const total = getSumOfRolls(karmaDieRoll);
-    dieRollObject.dice.push(
-      {
-        name: `karma(d${karmaDieSides})`,
-        rolls: karmaDieRoll,
-        total
-      }
-    )
-    dieRollObject.total += total;
-  }
-  return dieRollObject;
+export function getDiceRollResult(dieSides, dieName, modifier = 0) {
+  const rolls = explodingDie(parseInt(dieSides), modifier);
+  const modifierString = modifier ? ( modifier > 0 ? '+' + modifier : modifier ) : '';
+  return {
+    name: `${dieName}` + `${modifierString}`,
+    rolls,
+    total: getSumOfRolls(rolls)
+  };
 }
 
-export function rollStepDice(step, includeKarmaDie, karmaDieSides) {
+export function rollStepDice(step, includeKarmaDie = false, karmaDieSides = 0) {
   const stepValue = Number(step);
-  let dieSides, rolls;
+  const dieSides = convertStepToDice(stepValue);
+  const karmaRoll = includeKarmaDie ?
+    getDiceRollResult(karmaDieSides, `karma (d${karmaDieSides})`) : null
+  let rolls;
   switch(stepValue) {
     case 1: {
-      dieSides = convertStepToDice(stepValue);
-      rolls = [rollDie(dieSides[0]) - 2];
-      return addKarmaDie({
-          dice: [
-            {
-              name: `d${dieSides} - 2`,
-              rolls: rolls,
-              total: getSumOfRolls(rolls)
-            },
-          ],
-          total: getSumOfRolls(rolls)
-        }, includeKarmaDie, karmaDieSides);
-    }
-    case 2: {
-      dieSides = convertStepToDice(stepValue);
-      rolls = [rollDie(dieSides[0]) - 1];
-      return addKarmaDie({
-          dice: [
-            {
-              name: `d${dieSides} - 1`,
-              rolls: rolls,
-              total: getSumOfRolls(rolls)
-            },
-          ],
-          total: getSumOfRolls(rolls)
-        }, includeKarmaDie, karmaDieSides);
-    }
-    default: {
-      let results = [];
-      dieSides = convertStepToDice(stepValue);
-      dieSides.forEach(die => {
-        rolls = explodingDie(die);
-        results.push({
-          name: `d${die}`,
-          rolls: rolls,
-          total: getSumOfRolls(rolls)
-        })
-      });
-      return addKarmaDie({
+      const results = [getDiceRollResult(dieSides, `d${dieSides}`, -2)];
+      if (karmaRoll) {
+        results.push(karmaRoll);
+      }
+      return {
           dice: results,
           total: getSumOfAllRolls(results)
-        }, includeKarmaDie, karmaDieSides);
+        };
+    }
+    case 2: {
+      const results = [getDiceRollResult(dieSides, `d${dieSides}`, -1)];
+      if (karmaRoll) {
+        results.push(karmaRoll);
+      }
+      return {
+          dice: results,
+          total: getSumOfAllRolls(results)
+        };
+    }
+    default: {
+      const results = [];
+      dieSides.forEach(die => {
+        results.push(getDiceRollResult(die, `d${die}`));
+      });
+      if (karmaRoll) {
+        results.push(karmaRoll);
+      }
+      return {
+          dice: results,
+          total: getSumOfAllRolls(results)
+        };
     }
   }
 }

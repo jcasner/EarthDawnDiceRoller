@@ -1,11 +1,7 @@
 export function convertStepToDice(step) {
   switch(step) {
-    case 1: {
-      return [4];
-    }
-    case 2: {
-      return [4];
-    }
+    case 1:
+    case 2:
     case 3: {
       return [4];
     }
