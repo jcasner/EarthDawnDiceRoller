@@ -14,7 +14,7 @@ import DiceRollerAppToolbar from './DiceRollerAppToolbar';
 import IndividualDiceRollView from './IndividualDiceRollView';
 import QuickDiceRollView from './QuickDiceRollView';
 import Result from './Result';
-import { containerStyles, textStyles, toolbarStyles } from './styles';
+import { containerStyles } from './styles';
 import { rollStepDice } from '../utils/diceUtils';
 import { karmaDieSelector } from '../reducers/karmaDiceReducer';
 
@@ -61,12 +61,13 @@ class DiceRollerAppMain extends Component {
         <DiceRollerAppToolbar title={title} handlePress={this.navigateToSettings} />
         <View style={containerStyles.topContainer}>
           <QuickDiceRollView handlePress={this.handleRollClick} />
+          <Result diceRolls={diceRolls} />
           <CheckBox
             checked={includeKarmaDie}
             containerStyles={containerStyles.checkboxContainer}
-            label="Add Karma"
-            onChange={this.handleKarmaDieClick} />
-          <Result diceRolls={diceRolls} />
+            label='Add Karma'
+            onChange={this.handleKarmaDieClick}
+            underlayColor='steelblue' />
           <IndividualDiceRollView handlePress={this.handleRollClick} />
         </View>
       </View>

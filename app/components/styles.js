@@ -62,8 +62,8 @@ export const containerStyles = StyleSheet.create({
 
 export const toolbarStyles = StyleSheet.create({
   image: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
   },
   text: {
     color: '#3388FC',
@@ -77,6 +77,7 @@ export const toolbarStyles = StyleSheet.create({
     flexDirection: 'row',
     height: 56,
     justifyContent: 'space-between',
+    marginTop: 10
   },
 });
 
@@ -103,7 +104,8 @@ export const textStyles = StyleSheet.create({
   },
   singleResult: {
     color: '#F5FCFC',
-    height: 60,
+    flex: 1,
+    height: 100,
     margin: 10,
     textAlign: 'center',
   },
@@ -125,6 +127,8 @@ export const inputStyles = StyleSheet.create({
   inputBox: {
     color: '#3388FC',
     fontSize: 20,
+    height: 30,
+    paddingBottom: 0,
     textAlign: 'center',
   },
 });

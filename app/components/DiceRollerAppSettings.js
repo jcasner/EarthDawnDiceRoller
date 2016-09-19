@@ -23,6 +23,7 @@ import {
   quickButtonTwoSelector,
   quickButtonThreeSelector
 } from '../reducers/quickDiceReducer';
+import Button from './Button';
 
 class DiceRollerAppSettings extends Component {
 
@@ -30,13 +31,11 @@ class DiceRollerAppSettings extends Component {
     super(props);
   }
 
-  handleChangeKarmaDieValue = value => {
-    this.props.saveKarmaDie(value);
-  };
+  handleChangeKarmaDieValue = value => this.props.saveKarmaDie(value);
 
-  handleChangeQuickDieValue = (id, value) => {
-    this.props.saveQuickButton(id, value);
-  };
+  handleChangeQuickDieValue = (id, value) => this.props.saveQuickButton(id, value);
+
+  saveSettings = () => this.props.navigator.pop();
 
   render() {
     const {
@@ -106,6 +105,7 @@ class DiceRollerAppSettings extends Component {
             />
           </View>
         </View>
+        <Button handlePress={this.saveSettings} text='Save' />
       </View>
     );
   }

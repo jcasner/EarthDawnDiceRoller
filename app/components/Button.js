@@ -10,7 +10,7 @@ class Button extends Component {
       <TouchableHighlight
         style={[buttonStyles.button, bigButton && buttonStyles.bigButton]}
         onPress={() => handlePress(step)}
-        underlayColor="green">
+        underlayColor='steelblue'>
         <Text style={[buttonStyles.buttonText, bigButton && buttonStyles.bigButtonText]}>
           {text}
         </Text>

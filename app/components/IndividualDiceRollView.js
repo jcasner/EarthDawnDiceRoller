@@ -22,12 +22,13 @@ class IndividualDiceRollView extends Component {
         <Text style={textStyles.instructions}>Step</Text>
         <View style={containerStyles.inputContainer}>
           <TextInput
-            keyboardType = 'numeric'
+            keyboardType='numeric'
             onChangeText={(text)=> this.onTextChanged(text)}
             style={inputStyles.inputBox}
+            underlineColorAndroid='black'
           />
         </View>
-        <Button handlePress={handlePress} step={this.state.step} text="ROLL" />
+        <Button handlePress={handlePress} step={this.state.step} text='ROLL' />
       </View>
     );
   }
