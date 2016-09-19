@@ -1,0 +1,6 @@
+{
+  "name": "Earthdawn Dice Roller (Step Dice)",
+  "tagline": "A react-native app to convert the Earthdawn \"Step\" system into dice, and then roll them",
+  "body": "# Earthdawn Dice Roller\r\n\r\nAfter playing in an [Earthdawn](https://en.wikipedia.org/wiki/Earthdawn) campaign recently, one of the frustrations that I felt coming from the D&D world was the need to convert from \"Step\" to Dice. In an admittedly nerdy effort to simplify gaming while also learning react-native, I put this simple app together. Sure, there are other apps out there that do the same thing. But this seemed like a fun way to learn something new.\r\n\r\n## Getting Help\r\nPlease file bugs at https://github.com/jcasner/EarthdawnDiceRoller/issues\r\n\r\n## Contributions & Bugs\r\n\r\nThis is a labor of love. In that spirit, feel free to open [github issues](https://github.com/jcasner/EarthdawnDiceRoller/issues) or submit a Pull Request. Contributions are welcome and appreciated.\r\n\r\n## License\r\n\r\nOffered under the [MIT License](https://opensource.org/licenses/MIT)",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
