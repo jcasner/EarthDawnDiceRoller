@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  ToolbarAndroid,
-  TouchableHighlight,
   View
 } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
@@ -13,6 +10,7 @@ import compose from 'recompose/compose';
 
 import Button from './Button';
 import DiceRollerAppSettings from './DiceRollerAppSettings';
+import DiceRollerAppToolbar from './DiceRollerAppToolbar';
 import IndividualDiceRollView from './IndividualDiceRollView';
 import QuickDiceRollView from './QuickDiceRollView';
 import Result from './Result';
@@ -30,6 +28,7 @@ class DiceRollerAppMain extends Component {
     };
     this.handleRollClick = this.handleRollClick.bind(this);
     this.handleKarmaDieClick = this.handleKarmaDieClick.bind(this);
+    this.navigateToSettings = this.navigateToSettings.bind(this);
   }
 
   handleRollClick(step) {
@@ -59,15 +58,15 @@ class DiceRollerAppMain extends Component {
     const { title } = this.props;
     return (
       <View>
-        <ToolbarAndroid style={toolbarStyles.toolbar}
-          title={this.props.title}
-          titleColor={'#3388FC'}
-          actions={[{title: 'Settings', icon: require('../../icons/icon_settings.png'), show: 'always'}]}
-          onActionSelected={this.navigateToSettings.bind(this)} />
+        <DiceRollerAppToolbar title={title} handlePress={this.navigateToSettings} />
         <View style={containerStyles.topContainer}>
           <QuickDiceRollView handlePress={this.handleRollClick} />
-          <CheckBox label="Karma Die?" checked={includeKarmaDie} onChange={this.handleKarmaDieClick} />
-          <Result diceRolls={ diceRolls } />
+          <CheckBox
+            checked={includeKarmaDie}
+            containerStyles={containerStyles.checkboxContainer}
+            label="Add Karma"
+            onChange={this.handleKarmaDieClick} />
+          <Result diceRolls={diceRolls} />
           <IndividualDiceRollView handlePress={this.handleRollClick} />
         </View>
       </View>

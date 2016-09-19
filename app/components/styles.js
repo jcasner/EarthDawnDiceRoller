@@ -2,13 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export const buttonStyles = StyleSheet.create({
   button: {
-    backgroundColor: 'grey',
+    backgroundColor: 'skyblue',
+    borderRadius: 10,
     justifyContent: 'space-around',
     marginLeft: 5,
     padding: 5,
     paddingTop: 1,
   },
   bigButton: {
+    backgroundColor: 'skyblue',
+    borderRadius: 10,
     height: 40,
     marginLeft: 25,
     marginTop: 10,
@@ -24,6 +27,10 @@ export const buttonStyles = StyleSheet.create({
 });
 
 export const containerStyles = StyleSheet.create({
+  checkboxContainer: {
+    marginTop: 20,
+    paddingTop: 20
+  },
   container: {
     alignItems: 'center',
     backgroundColor: 'black',
@@ -49,14 +56,27 @@ export const containerStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 });
 
 export const toolbarStyles = StyleSheet.create({
-  toolbar: {
+  image: {
+    height: 50,
+    width: 50,
+  },
+  text: {
+    color: '#3388FC',
+    fontSize: 24,
+    paddingLeft: 10,
+    textAlign: 'center'
+  },
+  view: {
+    alignItems: 'center',
     backgroundColor: 'black',
+    flexDirection: 'row',
     height: 56,
+    justifyContent: 'space-between',
   },
 });
 
@@ -90,8 +110,8 @@ export const textStyles = StyleSheet.create({
   totalResult: {
     color: '#3388FC',
     fontSize: 120,
-    textAlign: 'center',
     margin: 10,
+    textAlign: 'center',
   },
   welcome: {
     color: '#3388FC',
