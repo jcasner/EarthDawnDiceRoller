@@ -1,3 +1,5 @@
+import { INVALID_STEP } from '../constants/ErrorText';
+
 export function convertStepToDice(step) {
   switch(step) {
     case 1:
@@ -79,6 +81,6 @@ export function convertStepToDice(step) {
     case 40:
       return [20, 20, 12, 10, 8];
     default:
-      return [0];
+      return INVALID_STEP;
   }
 }

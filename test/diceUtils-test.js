@@ -9,6 +9,7 @@ import {
   rollDie,
   rollStepDice
 } from '../app/utils/diceUtils';
+import { INVALID_STEP } from '../app/constants/ErrorText';
 
 describe('rollDie', () => {
   it('returns 0 for a `zero-sided` die', () => {
@@ -100,12 +101,12 @@ describe('rollStepDice', () => {
     const resultStep0 = rollStepDice(0);
     const resultStep41 = rollStepDice(41);
     expect(resultStep0.dice.length).toEqual(1);
-    expect(resultStep0.dice[0].total).toEqual(0);
-    expect(resultStep0.dice[0].name).toEqual('d0');
+    expect(resultStep0.dice[0].total).toEqual('*');
+    expect(resultStep0.dice[0].name).toEqual(INVALID_STEP);
     expect(_.sum(resultStep0.dice[0].rolls)).toEqual(resultStep0.dice[0].total);
     expect(resultStep41.dice.length).toEqual(1);
-    expect(resultStep41.dice[0].total).toEqual(0);
-    expect(resultStep41.dice[0].name).toEqual('d0');
+    expect(resultStep41.dice[0].total).toEqual('*');
+    expect(resultStep41.dice[0].name).toEqual(INVALID_STEP);
     expect(_.sum(resultStep41.dice[0].rolls)).toEqual(resultStep41.dice[0].total);
   });
 

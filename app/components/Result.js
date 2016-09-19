@@ -4,17 +4,10 @@ import { Text, View } from 'react-native';
 import { containerStyles, textStyles } from './styles';
 
 class Result extends Component {
-
   getDieResultLines(diceRolls) {
     let lines = [];
     diceRolls.dice && diceRolls.dice.forEach(die => {
-      if (die.name === 'd0') {
-        lines.push('Unknown step value entered. Please try again.');
-        return lines;
-      }
-      lines.push(
-        `${die.name}: ${die.rolls.length > 1 ? die.rolls.join('*, ') : die.rolls}\n`
-      );
+      lines.push(`${die.name}: ${die.rolls.length > 1 ? die.rolls.join('*, ') : die.rolls}\n`);
     });
     return lines;
   }
@@ -25,7 +18,7 @@ class Result extends Component {
     return (
       <View style={containerStyles.container}>
         <Text style={textStyles.totalResult}>
-          {diceRolls && diceRolls.total ? diceRolls.total : 0}
+          {diceRolls && diceRolls.total && diceRolls.dice && diceRolls.dice[0].name !== 'd0' ? diceRolls.total : 0}
         </Text>
         <Text style={textStyles.singleResult}>
           {diceRolls && diceRolls.dice ? this.getDieResultLines(diceRolls) : 'No dice rolled yet'}
