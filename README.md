@@ -11,13 +11,17 @@ After playing in an [Earthdawn](https://en.wikipedia.org/wiki/Earthdawn) campaig
 
 ## iOS Pre-requisites
 
-TBD
+1. Install Xcode
 
 ## Setup
 
     npm i -g react-native-cli
     npm install
     npm run (android|ios)
+    
+## Tests
+
+    npm run tests
 
 # Contributions & Bugs
 
