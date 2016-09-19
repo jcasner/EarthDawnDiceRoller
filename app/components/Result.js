@@ -8,6 +8,10 @@ class Result extends Component {
   getDieResultLines(diceRolls) {
     let lines = [];
     diceRolls.dice && diceRolls.dice.forEach(die => {
+      if (die.name === 'd0') {
+        lines.push('Unknown step value entered. Please try again.');
+        return lines;
+      }
       lines.push(
         `${die.name}: ${die.rolls.length > 1 ? die.rolls.join('*, ') : die.rolls}\n`
       );

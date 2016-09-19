@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { convertStepToDice } from './stepToDiceConverter';
 
 export function rollDie(numSides) {
-  return Math.floor(Math.random() * numSides) + 1;
+  return numSides ? Math.floor(Math.random() * numSides) + 1 : 0;
 }
 
 export function getSumOfRolls(diceRolls) {

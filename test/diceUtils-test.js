@@ -11,8 +11,8 @@ import {
 } from '../app/utils/diceUtils';
 
 describe('rollDie', () => {
-  it('returns 1 for a `zero-sided` die', () => {
-    expect(rollDie(0)).toEqual(1);
+  it('returns 0 for a `zero-sided` die', () => {
+    expect(rollDie(0)).toEqual(0);
   });
 
   it('rolls a one-sided die', () => {
@@ -90,23 +90,23 @@ describe('explodingDie', () => {
     expect(explodingDie(1)).toEqual([1,1,1,1,1]);
   });
 
-  it("Doesn't roll more dice when getting the max value of the current die", () => {
-    expect(explodingDie(0)).toEqual([1]);
+  it("Doesn't roll more dice when getting anything but the max value of the current die", () => {
+    expect(explodingDie(-1)).toEqual([0]);
   });
 });
 
 describe('rollStepDice', () => {
   it('rolls a d0 for unknown steps', () => {
     const resultStep0 = rollStepDice(0);
-    const resultStep21 = rollStepDice(21);
+    const resultStep41 = rollStepDice(41);
     expect(resultStep0.dice.length).toEqual(1);
-    expect(resultStep0.dice[0].total).toBeA('number');
+    expect(resultStep0.dice[0].total).toEqual(0);
     expect(resultStep0.dice[0].name).toEqual('d0');
     expect(_.sum(resultStep0.dice[0].rolls)).toEqual(resultStep0.dice[0].total);
-    expect(resultStep21.dice.length).toEqual(1);
-    expect(resultStep21.dice[0].total).toBeA('number');
-    expect(resultStep21.dice[0].name).toEqual('d0');
-    expect(_.sum(resultStep21.dice[0].rolls)).toEqual(resultStep21.dice[0].total);
+    expect(resultStep41.dice.length).toEqual(1);
+    expect(resultStep41.dice[0].total).toEqual(0);
+    expect(resultStep41.dice[0].name).toEqual('d0');
+    expect(_.sum(resultStep41.dice[0].rolls)).toEqual(resultStep41.dice[0].total);
   });
 
 
