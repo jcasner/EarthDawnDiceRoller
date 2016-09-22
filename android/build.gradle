@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -13,6 +13,28 @@ buildscript {
 }
 
 allprojects {
+    ext {
+        /**
+         * Get commit count for the root project and it's subproject from git
+         *
+         * Executes the following command:
+         * <code>
+         *     git rev-list HEAD --count . ../../mobile-core
+         * <code>
+         */
+        gitCommitCount = {
+            def stdout = new ByteArrayOutputStream()
+            def args = ['git', 'rev-list', 'HEAD', '--count']
+            rootProject.subprojects.each {
+                args.add(it.projectDir.absolutePath)
+            }
+            exec {
+                commandLine  args
+                standardOutput = stdout
+            }
+            return Integer.parseInt(stdout.toString().trim())
+        }()
+    }
     repositories {
         mavenLocal()
         jcenter()

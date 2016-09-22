@@ -35,7 +35,8 @@ class DiceRollerAppMain extends Component {
     const { includeKarmaDie } = this.state;
     const { karmaDieSides } = this.props;
     this.setState({
-    	diceRolls: rollStepDice(step, includeKarmaDie, karmaDieSides)
+    	diceRolls: rollStepDice(step, includeKarmaDie, karmaDieSides),
+      includeKarmaDie: false
     });
     dismissKeyboard();
   }
@@ -53,8 +54,7 @@ class DiceRollerAppMain extends Component {
   }
 
   render() {
-    let diceRolls = this.state.diceRolls;
-    const { includeKarmaDie } = this.state;
+    const { diceRolls, includeKarmaDie } = this.state;
     const { title } = this.props;
     return (
       <View>
