@@ -113,11 +113,8 @@ android {
         }
     }
     buildTypes {
-        debug {
-            manifestPlaceholders = [excludeSystemAlertWindowPermission: "false"]
-        }
         release {
-            manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
+            manifestPlaceholders = [permissionName: "android.permission.SYSTEM_ALERT_WINDOW"]
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
