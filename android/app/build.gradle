@@ -113,6 +113,9 @@ android {
         }
     }
     buildTypes {
+        debug {
+            manifestPlaceholders = [permissionName: "android.permission.READ_PHONE_STATE"]
+        }
         release {
             manifestPlaceholders = [permissionName: "android.permission.SYSTEM_ALERT_WINDOW"]
             signingConfig signingConfigs.release
