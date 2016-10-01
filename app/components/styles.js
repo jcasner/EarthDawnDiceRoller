@@ -14,7 +14,6 @@ export const buttonStyles = StyleSheet.create({
     borderRadius: 10,
     height: 40,
     marginLeft: 25,
-    marginTop: 10,
     width: 75,
   },
   buttonText: {
@@ -40,6 +39,11 @@ export const containerStyles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
     width: 50,
+  },
+  wideInputContainer: {
+    borderColor: 'white',
+    borderWidth: 1,
+    width: 150,
   },
   navContainer: {
     backgroundColor: 'black',
@@ -92,6 +96,12 @@ export const textStyles = StyleSheet.create({
   quick: {
     color: 'white',
     textAlign: 'center',
+  },
+  quickButton: {
+    color: 'white',
+    textAlign: 'center',
+    marginLeft: 25,
+    marginTop: 10,
   },
   settings: {
     color: 'white',

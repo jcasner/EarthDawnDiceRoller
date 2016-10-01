@@ -1,7 +1,6 @@
 import { handleActions } from 'redux-actions';
 
 import {
-  LOAD_KARMA_DIE,
   SAVE_KARMA_DIE
 } from '../actions';
 
@@ -10,9 +9,6 @@ export const initialState = {
 }
 
 export default handleActions({
-  [LOAD_KARMA_DIE]: (state, { payload }) => ({
-    ...state
-  }),
   [SAVE_KARMA_DIE]: (state, { payload }) => ({
     ...state,
     karmaDieSides: payload

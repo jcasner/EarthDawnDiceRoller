@@ -3,27 +3,41 @@ import { AsyncStorage, Text, TextInput, View } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createStructuredSelector } from 'reselect';
 import compose from 'recompose/compose';
 import mapProps from 'recompose/mapProps';
 
 import { containerStyles, inputStyles, textStyles } from './styles';
 import {
-  QUICK_BUTTON_ONE,
-  QUICK_BUTTON_TWO,
-  QUICK_BUTTON_THREE
-} from '../constants/QuickButtonNames';
-import {
   saveKarmaDie,
   saveQuickButton
 } from '../actions';
 import { karmaDieSelector } from '../reducers/karmaDiceReducer';
-import {
-  quickButtonOneSelector,
-  quickButtonTwoSelector,
-  quickButtonThreeSelector
-} from '../reducers/quickDiceReducer';
 import Button from './Button';
+
+const mapStateToProps = state => ({
+  quickButtons: state.quickButtons
+});
+
+const QuickButtonSetting = props =>
+  <View style={containerStyles.rowContainer}>
+    <View style={containerStyles.wideInputContainer}>
+      <TextInput
+        maxLength={15}
+        onChangeText={(text) => props.saveFn(props.id, text, props.step)}
+        style={inputStyles.inputBox}
+        value={props.name}
+      />
+    </View>
+    <Text style={textStyles.settingsSmall}>Step</Text>
+    <View style={containerStyles.inputContainer}>
+      <TextInput
+        keyboardType = 'numeric'
+        onChangeText={(text) => props.saveFn(props.id, props.name, text)}
+        style={inputStyles.inputBox}
+        value={props.step}
+      />
+    </View>
+  </View>
 
 class DiceRollerAppSettings extends Component {
 
@@ -33,64 +47,27 @@ class DiceRollerAppSettings extends Component {
 
   handleChangeKarmaDieValue = value => this.props.saveKarmaDie(value);
 
-  handleChangeQuickDieValue = (id, value) => this.props.saveQuickButton(id, value);
+  handleChangeQuickDieValue = (index, name, value) => this.props.saveQuickButton(index, name, value);
 
   saveSettings = () => this.props.navigator.pop();
 
   render() {
     const {
-      karmaDieSides,
-      quickButtonOne,
-      quickButtonTwo,
-      quickButtonThree
+      karmaDieSides
     } = this.props;
     return (
       <View style={containerStyles.topContainer}>
         <Text style={textStyles.welcome}>
           Settings
         </Text>
-        <View style={containerStyles.rowContainer}>
-          <Text style={textStyles.settings}>
-            Quick Button 1:
-          </Text>
-          <Text style={textStyles.settingsSmall}>Step</Text>
-          <View style={containerStyles.inputContainer}>
-            <TextInput
-              keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_ONE, text)}
-              style={inputStyles.inputBox}
-              value={quickButtonOne}
-            />
-          </View>
-        </View>
-        <View style={containerStyles.rowContainer}>
-          <Text style={textStyles.settings}>
-            Quick Button 2:
-          </Text>
-          <Text style={textStyles.settingsSmall}>Step</Text>
-          <View style={containerStyles.inputContainer}>
-            <TextInput
-              keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_TWO, text)}
-              style={inputStyles.inputBox}
-              value={quickButtonTwo}
-            />
-          </View>
-        </View>
-        <View style={containerStyles.rowContainer}>
-          <Text style={textStyles.settings}>
-            Quick Button 3:
-          </Text>
-          <Text style={textStyles.settingsSmall}>Step</Text>
-          <View style={containerStyles.inputContainer}>
-            <TextInput
-              keyboardType = 'numeric'
-              onChangeText={(text) => this.handleChangeQuickDieValue(QUICK_BUTTON_THREE, text)}
-              style={inputStyles.inputBox}
-              value={quickButtonThree}
-            />
-          </View>
-        </View>
+        {this.props.quickButtons.map((btn, index) =>
+          <QuickButtonSetting
+            id={index}
+            key={index}
+            name={btn.name}
+            saveFn={this.handleChangeQuickDieValue}
+            step={btn.value} />
+        )}
         <View style={containerStyles.rowContainer}>
           <Text style={textStyles.settings}>
             Karma Die Sides:
@@ -113,12 +90,7 @@ class DiceRollerAppSettings extends Component {
 
 const enhance = compose(
   connect(
-    createStructuredSelector({
-      karmaDieSides: karmaDieSelector,
-      quickButtonOne: quickButtonOneSelector,
-      quickButtonTwo: quickButtonTwoSelector,
-      quickButtonThree: quickButtonThreeSelector
-    }),
+    mapStateToProps,
     {
       saveKarmaDie,
       saveQuickButton

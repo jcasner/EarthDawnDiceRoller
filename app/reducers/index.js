@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 import karmaDice from './karmaDiceReducer';
-import quickDice from './quickDiceReducer';
+import quickButtons from './quickButtonsReducer';
 
 export default combineReducers({
   karmaDice,
-  quickDice
+  quickButtons
 });
