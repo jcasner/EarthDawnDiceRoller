@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 const QuickDiceCollection = props =>
   <View>
     <Text style={textStyles.quick}>Quick Roll Buttons</Text>
-    <View style={containerStyles.rowContainer}>
+    <View style={containerStyles.quickBtnContainer}>
       {props.quickButtons.map((btn, index) =>
         <QuickButton
           handlePress={props.handlePress}

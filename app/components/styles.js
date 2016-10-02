@@ -56,6 +56,14 @@ export const containerStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  quickBtnContainer: {
+    alignItems: 'center',
+    backgroundColor: 'black',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex:1,
+    justifyContent: 'center',
+  },
   topContainer: {
     alignItems: 'center',
     backgroundColor: 'black',
