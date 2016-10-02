@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import compose from 'recompose/compose';
-import mapProps from 'recompose/mapProps';
 
 import { containerStyles, inputStyles, textStyles } from './styles';
 import {
@@ -42,11 +40,7 @@ const QuickButtonSetting = props =>
 
 class DiceRollerAppSettings extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  handleChangeKarmaDieValue = value => this.props.saveKarmaDie(value);
+  handleChangeKarmaDieValue = (value) => this.props.saveKarmaDie(value);
 
   handleChangeQuickDieValue = (index, name, value) => this.props.saveQuickButton(index, name, value);
 
