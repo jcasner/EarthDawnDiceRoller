@@ -15,6 +15,7 @@ import { karmaDieSelector } from '../reducers/karmaDiceReducer';
 import Button from './Button';
 
 const mapStateToProps = state => ({
+  karmaDieSides: state.karmaDice.karmaDieSides,
   quickButtons: state.quickButtons
 });
 
