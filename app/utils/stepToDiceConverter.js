@@ -41,7 +41,7 @@ export function convertStepToDice(step) {
     case 20:
       return [20, 8, 6];
     case 21:
-      return [20, 10, 6];
+      return [20, 8, 8];
     case 22:
       return [20, 10, 8];
     case 23:
@@ -49,35 +49,35 @@ export function convertStepToDice(step) {
     case 24:
       return [20, 12, 10];
     case 25:
-      return [20, 10, 8, 4];
+      return [20, 12, 12];
     case 26:
-      return [20, 10, 8, 6];
+      return [20, 12, 6, 6];
     case 27:
-      return [20, 10, 8, 8];
+      return [20, 12, 8, 6];
     case 28:
-      return [20, 10, 10, 8];
+      return [20, 12, 8, 8];
     case 29:
       return [20, 12, 10, 8];
     case 30:
-      return [20, 10, 8, 6, 6];
+      return [20, 20, 6, 6];
     case 31:
-      return [20, 10, 8, 8, 6];
+      return [20, 20, 8, 6];
     case 32:
-      return [20, 10, 10, 8, 6];
+      return [20, 20, 8, 8];
     case 33:
-      return [20, 10, 10, 8, 8];
+      return [20, 20, 10, 8];
     case 34:
-      return [20, 10, 10, 10, 8];
+      return [20, 20, 10, 10];
     case 35:
-      return [20, 12, 10, 10, 8];
+      return [20, 20, 12, 10];
     case 36:
-      return [20, 20, 10, 8, 4];
+      return [20, 20, 12, 12];
     case 37:
-      return [20, 20, 10, 8, 6];
+      return [20, 20, 12, 6, 6];
     case 38:
-      return [20, 20, 10, 8, 8];
+      return [20, 20, 12, 8, 6];
     case 39:
-      return [20, 20, 10, 10, 8];
+      return [20, 20, 12, 8, 8];
     case 40:
       return [20, 20, 12, 10, 8];
     default:
